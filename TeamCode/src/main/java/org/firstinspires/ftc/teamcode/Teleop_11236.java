@@ -62,7 +62,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwareK9bot;
 public class Teleop_11236 extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareK9bot   robot           = new HardwareK9bot();              // Use a K9'shardware
+    HardwareK9bot_11236   robot           = new HardwareK9bot_11236();              // Use a K9'shardware
 
 
     @Override
