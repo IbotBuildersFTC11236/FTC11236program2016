@@ -32,12 +32,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwareK9bot;
 
 /**
  * This OpMode uses the common HardwareK9bot class to define the devices on the robot.
@@ -62,7 +58,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwareK9bot;
 public class Teleop_11236 extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareK9bot_11236   robot           = new HardwareK9bot_11236();              // Use a K9'shardware
+    HardwareTeleop_11236 robot           = new HardwareTeleop_11236();              // Use a K9'shardware
 
 
     @Override
@@ -95,8 +91,13 @@ public class Teleop_11236 extends LinearOpMode {
 
             // Use "a" button to spin fly wheels together
             if(gamepad1.a) {
-                robot.rightFlyWheel.setPower(1);
-                robot.leftFlyWheel.setPower(1);
+                robot.rightFlyWheel.setPower(-1);
+                robot.leftFlyWheel.setPower(-1);
+            }
+            // Use "b" button to stop fly wheels
+            if(gamepad1.b) {
+                robot.rightFlyWheel.setPower(0);
+                robot.leftFlyWheel.setPower(0);
             }
             // Use bumpers to spin fly wheels separately
             /*if (gamepad1.left_bumper)

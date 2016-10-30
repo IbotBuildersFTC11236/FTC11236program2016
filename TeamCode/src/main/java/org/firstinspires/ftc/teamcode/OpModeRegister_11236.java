@@ -72,6 +72,7 @@ public class OpModeRegister_11236
 
        //TeleOp
        manager.register("First Teleop", Teleop_11236.class);
+       manager.register("First Autonomous", Autonomous_11236.class);
 
 
     // Driving Samples
