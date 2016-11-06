@@ -44,9 +44,11 @@ public class Autonomous_Makeshift extends LinearOpMode{
         flywheelR.setPower(power);
     }
     public void liftAndLaunch(double power,long time) throws InterruptedException {
+        intake.setPower(-1);
         lift.setPower(power);
         shootIt(power);
         Thread.sleep(time);
+        intake.setPower(0);
         lift.setPower(0);
         shootIt(0);
     }
@@ -62,9 +64,9 @@ public class Autonomous_Makeshift extends LinearOpMode{
         flywheelL.setDirection(DcMotor.Direction.REVERSE);
         //Start dat robot
         waitForStart();
-        liftAndLaunch(1, 40000);
+        liftAndLaunch(1, 4000);
         Thread.sleep(2000);
-        driveForwardTime(-.5, 5);
+        driveForwardTime(.5, 2000);
 
 
     }

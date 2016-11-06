@@ -102,9 +102,9 @@ public class Teleop_11236 extends LinearOpMode {
                 robot.rightFlyWheel.setPower(0);
                 robot.leftFlyWheel.setPower(0);
             }
-            if(gamepad2.x)
+            if(gamepad2.b)
             {
-                robot.pulley.setPower(1);
+                robot.pulley.setPower(-1);
             }
             if(gamepad2.y)
             {
@@ -114,7 +114,11 @@ public class Teleop_11236 extends LinearOpMode {
             {
                 robot.intake.setPower(-1);
             }
-            if(gamepad1.y)
+            if(gamepad1.x)
+            {
+                robot.intake.setPower(-1);
+            }
+            if(gamepad1.a)
             {
                 robot.intake.setPower(0);
             }
