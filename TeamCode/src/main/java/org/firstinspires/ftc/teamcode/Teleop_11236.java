@@ -86,18 +86,29 @@ public class Teleop_11236 extends LinearOpMode {
             right = -gamepad1.right_stick_y;
             robot.leftMotor.setPower(left);
             robot.rightMotor.setPower(right);
+            robot.intake.setPower(-1);
+
+
 
 
 
             // Use "a" button to spin fly wheels together
             if(gamepad1.a) {
-                robot.rightFlyWheel.setPower(-1);
-                robot.leftFlyWheel.setPower(-1);
+                robot.rightFlyWheel.setPower(1);
+                robot.leftFlyWheel.setPower(1);
             }
             // Use "b" button to stop fly wheels
             if(gamepad1.b) {
                 robot.rightFlyWheel.setPower(0);
                 robot.leftFlyWheel.setPower(0);
+            }
+            if(gamepad1.x)
+            {
+                robot.pulley.setPower(1);
+            }
+            if(gamepad1.y)
+            {
+                robot.pulley.setPower(0);
             }
             // Use bumpers to spin fly wheels separately
             /*if (gamepad1.left_bumper)

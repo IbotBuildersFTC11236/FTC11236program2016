@@ -32,7 +32,8 @@ public class HardwareTeleop_11236
     public DcMotor  rightMotor  = null;
     public DcMotor  rightFlyWheel = null;
     public DcMotor  leftFlyWheel  = null;
-
+    public DcMotor  intake = null;
+    public DcMotor  pulley = null;
 
 
     /* Local OpMode members. */
@@ -51,16 +52,21 @@ public class HardwareTeleop_11236
         // Define and Initialize Motors
         leftMotor   = hwMap.dcMotor.get("left_drive");
         rightMotor  = hwMap.dcMotor.get("right_drive");
+        intake = hwMap.dcMotor.get("intake");
+        pulley = hwMap.dcMotor.get("pulley");
         leftFlyWheel   = hwMap.dcMotor.get("left_fly");
         rightFlyWheel  = hwMap.dcMotor.get("right_fly");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         leftFlyWheel.setDirection(DcMotor.Direction.REVERSE);
+
 
         // Set all motors to zero power
         leftMotor.setPower(0);
         rightMotor.setPower(0);
         leftFlyWheel.setPower(0);
         rightFlyWheel.setPower(0);
+        intake.setPower(0);
+        intake.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -68,6 +74,8 @@ public class HardwareTeleop_11236
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftFlyWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFlyWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        pulley.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
     }

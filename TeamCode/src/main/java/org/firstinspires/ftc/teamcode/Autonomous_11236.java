@@ -113,7 +113,7 @@ public class Autonomous_11236 extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        waitForInches(robot.leftMotor, robot.rightMotor, 24, .2);
+        //waitForInches(robot.leftMotor, robot.rightMotor, 24, .2);
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 //        encoderDrive(DRIVE_SPEED,  24,  24, 3.0);  // S1: Forward 47 Inches with 5 Sec timeout
@@ -136,7 +136,10 @@ public class Autonomous_11236 extends LinearOpMode {
      *  3) Driver stops the opmode running.
      */
 
+    public void movefortime(DcMotor motorLeft, DcMotor motorRight, int sec, double power)
+    {
 
+    }
     public void waitForInches(DcMotor motorLeft, DcMotor motorRight, int inches, double power) {
         {
             int encoderValue = (int) (inches / INCHES_PER_TICK);
