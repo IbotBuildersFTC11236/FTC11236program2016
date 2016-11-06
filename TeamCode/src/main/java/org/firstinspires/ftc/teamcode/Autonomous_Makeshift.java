@@ -66,7 +66,7 @@ public class Autonomous_Makeshift extends LinearOpMode{
         waitForStart();
         liftAndLaunch(1, 4000);
         Thread.sleep(2000);
-        driveForwardTime(.5, 2000);
+        driveForwardTime(.5, 2500);
 
 
     }
