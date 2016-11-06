@@ -62,7 +62,9 @@ public class Autonomous_Makeshift extends LinearOpMode{
         flywheelL.setDirection(DcMotor.Direction.REVERSE);
         //Start dat robot
         waitForStart();
-        liftAndLaunch(.5, 4);
+        liftAndLaunch(1, 40000);
+        Thread.sleep(2000);
+        driveForwardTime(-.5, 5);
 
 
     }
