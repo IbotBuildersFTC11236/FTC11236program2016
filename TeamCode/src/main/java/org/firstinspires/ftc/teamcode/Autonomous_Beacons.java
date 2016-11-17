@@ -1,0 +1,76 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+
+/**
+ * Created by zhitao on 11/5/2016.
+ */
+@Autonomous(name = "Auto", group = "Teamcode")
+public class Autonomous_Beacons extends LinearOpMode{
+    DcMotor drivemotorL;
+    DcMotor drivemotorR;
+    DcMotor flywheelL;
+    DcMotor flywheelR;
+    DcMotor intake;
+    DcMotor lift;
+    ColorSensor color;
+
+
+
+    public void driveForwardTime(double power, long time) throws InterruptedException{
+        drivemotorL.setPower(power);
+        drivemotorR.setPower(power);
+        Thread.sleep(time);
+        drivemotorL.setPower(0);
+        drivemotorR.setPower(0);
+    }
+    public void turnLeftTime(double power, long time) throws InterruptedException{
+        drivemotorL.setPower(-power);
+        drivemotorR.setPower(power);
+        Thread.sleep(time);
+        drivemotorL.setPower(0);
+        drivemotorR.setPower(0);
+    }
+    public void turnRightTime(double power, long time) throws InterruptedException{
+        drivemotorL.setPower(power);
+        drivemotorR.setPower(-power);
+        Thread.sleep(time);
+        drivemotorL.setPower(0);
+        drivemotorR.setPower(0);
+    }
+    public void shootIt(double power) {
+        flywheelL.setPower(power);
+        flywheelR.setPower(power);
+    }
+    public void liftAndLaunch(double power,long time) throws InterruptedException {
+        intake.setPower(-1);
+        lift.setPower(1);
+        shootIt(power);
+        Thread.sleep(time);
+        intake.setPower(0);
+        lift.setPower(0);
+        shootIt(0);
+    }
+
+    public void runOpMode() throws InterruptedException{
+        drivemotorL = hardwareMap.dcMotor.get("left_drive");
+        drivemotorR = hardwareMap.dcMotor.get("right_drive");
+        flywheelL = hardwareMap.dcMotor.get("left_fly");
+        flywheelR = hardwareMap.dcMotor.get("right_fly");
+        lift = hardwareMap.dcMotor.get("pulley");
+        intake = hardwareMap.dcMotor.get("intake");
+        color = hardwareMap.colorSensor.get("color");
+        drivemotorL.setDirection(DcMotor.Direction.REVERSE);
+        flywheelL.setDirection(DcMotor.Direction.REVERSE);
+        //Start dat robot
+        waitForStart();
+        liftAndLaunch(1, 4000);
+        Thread.sleep(2000);
+        driveForwardTime(.5, 1000);
+
+
+    }
+}

@@ -82,7 +82,7 @@ public class SensorMRColor extends LinearOpMode {
     boolean bLedOn = true;
 
     // get a reference to our ColorSensor object.
-    colorSensor = hardwareMap.colorSensor.get("sensor_color");
+    colorSensor = hardwareMap.colorSensor.get("color");
 
     // Set the LED in the beginning
     colorSensor.enableLed(bLedOn);
@@ -93,7 +93,13 @@ public class SensorMRColor extends LinearOpMode {
     // while the op mode is active, loop and read the RGB data.
     // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
     while (opModeIsActive()) {
-
+        if(colorSensor.red() > colorSensor.blue()) {
+          telemetry.addLine("REEEEEEEEEEd");
+        }
+      if(colorSensor.blue() > colorSensor.red())
+      {
+        telemetry.addLine("BLUUUUUUUUUUUe");
+      }
       // check the status of the x button on either gamepad.
       bCurrState = gamepad1.x;
 
@@ -101,7 +107,6 @@ public class SensorMRColor extends LinearOpMode {
       if ((bCurrState == true) && (bCurrState != bPrevState))  {
 
         // button is transitioning to a pressed state. So Toggle LED
-        bLedOn = !bLedOn;
         colorSensor.enableLed(bLedOn);
       }
 
