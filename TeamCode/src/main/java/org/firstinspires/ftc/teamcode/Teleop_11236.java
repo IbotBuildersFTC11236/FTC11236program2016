@@ -82,8 +82,8 @@ public class Teleop_11236 extends LinearOpMode {
         while (opModeIsActive()) {
 
             // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
-            left = -gamepad1.left_stick_y;
-            right = -gamepad1.right_stick_y;
+            left = gamepad1.left_stick_y;
+            right = gamepad1.right_stick_y;
             robot.leftMotor.setPower(left);
             robot.rightMotor.setPower(right);
             //robot.intake.setPower(-1);
@@ -97,28 +97,29 @@ public class Teleop_11236 extends LinearOpMode {
                 robot.rightFlyWheel.setPower(1);
                 robot.leftFlyWheel.setPower(1);
             }
+            if(gamepad2.x) {
+                robot.pulley.setPower(1);
+            }
             // Use "b" button to stop fly wheels
             if(gamepad2.b) {
-                robot.rightFlyWheel.setPower(0);
-                robot.leftFlyWheel.setPower(0);
-            }
-            if(gamepad2.b)
-            {
-                robot.pulley.setPower(-1);
+                robot.rightFlyWheel.setPower(.8);
+                robot.leftFlyWheel.setPower(.8);
             }
             if(gamepad2.y)
             {
                 robot.pulley.setPower(0);
+                robot.rightFlyWheel.setPower(0);
+                robot.leftFlyWheel.setPower(0);
             }
             if(gamepad1.x)
             {
-                robot.intake.setPower(-1);
-            }
-            if(gamepad1.x)
-            {
-                robot.intake.setPower(-1);
+                robot.intake.setPower(1);
             }
             if(gamepad1.a)
+            {
+                robot.intake.setPower(-1);
+            }
+            if(gamepad1.b)
             {
                 robot.intake.setPower(0);
             }
