@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 import com.qualcomm.robotcore.eventloop.opmode.AnnotatedOpModeRegistrar;
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptNullOp;
+import org.firstinspires.ftc.robotcontroller.external.samples.PushbotAutoDriveByEncoder_Linear;
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRColor;
 
 /**
@@ -66,6 +67,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     public void register(OpModeManager manager) {
 
        manager.register("Sense beacons", SensorMRColor.class);
+        manager.register("Encoders", PushbotAutoDriveByEncoder_Linear.class);
         BlocksOpMode.registerAll(manager);
 
         /**
