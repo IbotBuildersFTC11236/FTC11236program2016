@@ -41,9 +41,9 @@ public class Autonomous_Beacons extends LinearOpMode{
     static final char     RIGHT                   = 'R';
     static final char     LEFT                    = 'L';
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
-    static final double     DIST_WHEELS             = 15.0;
+    static final double     DIST_WHEELS             = 14.0;
     static final double     PI                      = 3.1415926535897932;
-    static final double     INCH_PER_DEG             = (PI * 2 * (DIST_WHEELS/2) / 360); //Two-wheel turn
+    static final double     INCH_PER_DEG             = ((PI * 2 * DIST_WHEELS) / 360); //Two-wheel turn
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -191,10 +191,14 @@ public class Autonomous_Beacons extends LinearOpMode{
         numOfInches = (degree * INCH_PER_DEG);
         if(direction == LEFT)
         {
+            drivemotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            drivemotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             encoderDrivebyDistance(speed, numOfInches, -numOfInches);
         }
         else if(direction == RIGHT)
         {
+            drivemotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            drivemotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             encoderDrivebyDistance(speed, -numOfInches, numOfInches);
         }
         else
@@ -276,18 +280,20 @@ public class Autonomous_Beacons extends LinearOpMode{
         Thread.sleep(1000);
         //Make turn to beacon
         //turnRightTime(.5, 600);
-        encoderTurnByDistance(.2, 60, RIGHT);
+        //turnRightTime(.5, 600);
+        encoderTurnByDistance(.2, 45, RIGHT);
         Thread.sleep(1000);
         //Go forward on slant
         //driveForwardTime(.5, 2075);
-        encoderDrivebyDistance(.4, 45, 45);
+        encoderDrivebyDistance(.4, 48, 48);
         Thread.sleep(1000);
         //Turn to face beacon
         //turnLeftTime(.5, 1300);
-        encoderTurnByDistance(.2, 150, LEFT);
+        encoderTurnByDistance(.2, 75, LEFT);
         Thread.sleep(1000);
         // Go to beacon
-        driveForwardTime(-.5, 670);
+        driveForwardTime(-.5, 700);
+        encoderDrivebyDistance(.2, 2, 2);
 
         Color.RGBToHSV(color.red() * 8, color.green() * 8, color.blue() * 8, hsvValues);
 
@@ -307,15 +313,16 @@ public class Autonomous_Beacons extends LinearOpMode{
         {
             telemetry.addData("REEED", color.red());
             telemetry.update();
-            Thread.sleep(1000);
-            encoderDrivebyDistance(.5, 8, 8);
+            Thread.sleep(4000);
+            encoderDrivebyDistance(-.5, 2, 2);
+            // Go do ball
         }
         else if(color.blue() >= 1)
         {
             telemetry.addData("BLUEEEE", color.blue());
             telemetry.update();
             Thread.sleep(1000);
-            encoderDrivebyDistance(.5, 24, 24);
+            //Go do ball
         }
 
 
