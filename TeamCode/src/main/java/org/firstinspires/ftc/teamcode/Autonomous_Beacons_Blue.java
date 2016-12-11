@@ -1,42 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
 import android.app.Activity;
-import android.drm.DrmStore;
 import android.graphics.Color;
 import android.view.View;
-
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import android.app.Activity;
-import android.graphics.Color;
-import android.view.View;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import com.qualcomm.ftcrobotcontroller.R;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by zhitao on 11/5/2016.
  */
 @Autonomous(name = "Auto", group = "Teamcode")
-public class Autonomous_Beacons extends LinearOpMode{
+public class Autonomous_Beacons_Blue extends LinearOpMode{
     private ElapsedTime runtime = new ElapsedTime();
     static final char     RIGHT                   = 'R';
     static final char     LEFT                    = 'L';
@@ -328,7 +307,7 @@ public class Autonomous_Beacons extends LinearOpMode{
             encoderDrivebyDistance(.5, 25, 25);
             //Thread.sleep(200);
             encoderTurnByDistance(.3, 65, LEFT);
-            Thread.sleep(500);
+            Thread.sleep( 500);
             encoderDrivebyDistance(.5, 33, 33);
             // Go do ball
         }
