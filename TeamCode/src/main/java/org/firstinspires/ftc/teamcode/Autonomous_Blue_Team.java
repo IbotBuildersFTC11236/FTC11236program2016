@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Created by zhitao on 11/5/2016.
  */
 @Autonomous(name = "Auto", group = "Teamcode")
-public class Autonomous_Beacons_Red extends LinearOpMode{
+public class Autonomous_Blue_Team extends LinearOpMode{
     private ElapsedTime runtime = new ElapsedTime();
     static final char     RIGHT                   = 'R';
     static final char     LEFT                    = 'L';
@@ -66,7 +66,7 @@ public class Autonomous_Beacons_Red extends LinearOpMode{
     public void liftAndLaunch(double power,long time) throws InterruptedException {
         shootIt(power);
         Thread.sleep(1000);
-        lift.setPower(.5);
+        lift.setPower(1);
         intake.setPower(-1);
         Thread.sleep(time);
         intake.setPower(0);
@@ -267,13 +267,13 @@ public class Autonomous_Beacons_Red extends LinearOpMode{
         //driveForwardTime(.5, 2075);
         encoderDrivebyDistance(-.4, 10, 10);
         Thread.sleep(500);
-        liftAndLaunch(1, 3000);
+        liftAndLaunch(.8, 3000);
         //Thread.sleep(200);
-        encoderDrivebyDistance(-.4, 26, 26);
+        encoderDrivebyDistance(-.2, 23, 23);
 
         //Turn to face beacon
         //turnLeftTime(.5, 1300);
-        encoderDrivebyDistance(.1, 4, 4);
+        encoderDrivebyDistance(.3, 4, 4);
         //Thread.sleep(200);
         // Go to beacon
         //encoderDrivebyDistance(-.5, 18, 18);
@@ -299,9 +299,9 @@ public class Autonomous_Beacons_Red extends LinearOpMode{
             telemetry.addData("RED", color.red());
             telemetry.update();
             Thread.sleep(4000);
-            encoderDrivebyDistance(-.5, 5, 5);
+            encoderDrivebyDistance(-.3, 4, 4);
             //Thread.sleep(200);
-            encoderDrivebyDistance(.2, 24,24);
+            encoderDrivebyDistance(.2, 12,12);
             //Thread.sleep(200);
             //encoderTurnByDistance(.2, 90, LEFT);
             //Thread.sleep(400);
@@ -309,11 +309,11 @@ public class Autonomous_Beacons_Red extends LinearOpMode{
             //Thread.sleep(400);
             encoderTurnByDistance(.2, 45, RIGHT);
             //Thread.sleep(200);
-            encoderDrivebyDistance(.5, 25, 25);
+            encoderDrivebyDistance(.6, 27, 27);
             //Thread.sleep(200);
             encoderTurnByDistance(.3, 65, LEFT);
-            Thread.sleep( 500);
-            encoderDrivebyDistance(.5, 24, 24);
+            Thread.sleep(500);
+            encoderDrivebyDistance(.5, 25, 25);
             //encoderDrivebyDistance(-.5, 5, 5);
             //Thread.sleep(200);
             //encoderDrivebyDistance(.2, 24,24);
@@ -336,7 +336,7 @@ public class Autonomous_Beacons_Red extends LinearOpMode{
             telemetry.addData("BLUE", color.blue());
             telemetry.update();
             Thread.sleep(100);
-            encoderDrivebyDistance(.2, 24,24);
+            encoderDrivebyDistance(.2, 12,12);
             //Thread.sleep(200);
             //encoderTurnByDistance(.2, 90, LEFT);
             //Thread.sleep(400);
@@ -347,8 +347,8 @@ public class Autonomous_Beacons_Red extends LinearOpMode{
             encoderDrivebyDistance(.5, 25, 25);
             //Thread.sleep(200);
             encoderTurnByDistance(.3, 65, LEFT);
-            Thread.sleep( 500);
-            encoderDrivebyDistance(.5, 24, 24);
+            Thread.sleep(500);
+            encoderDrivebyDistance(.5, 25, 25);
             //encoderDrivebyDistance(.2, 24, 24);
             //encoderTurnByDistance(.2, 47, RIGHT);
             //Thread.sleep(200);

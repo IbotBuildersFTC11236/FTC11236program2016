@@ -71,11 +71,11 @@ public class OpModeRegister_11236
 
 
        //TeleOp
-       manager.register("First Teleop", Teleop_11236.class);
-       manager.register("First Autonomous", Autonomous_11236.class);
-       manager.register("Makeshift Autonomous", Autonomous_Makeshift.class);
-      manager.register("Autonomous Beacons Blue Team", Autonomous_Beacons_Blue.class);
-      manager.register("Better Autonomous", Autonomous_Beacons_Red.class);
+       //manager.register("First Teleop", Teleop_11236.class);
+       //manager.register("First Autonomous", Autonomous_11236.class);
+       manager.register("Red Team Autonomous", Autonomous_Red_Team.class);
+      //manager.register("Autonomous Beacons Blue Team", Autonomous_Beacons_Blue.class);
+      manager.register("Blue Team Autonomous", Autonomous_Blue_Team.class);
 
 
     // Driving Samples
