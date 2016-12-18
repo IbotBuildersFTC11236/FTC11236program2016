@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Created by zhitao on 11/5/2016.
  */
-@Autonomous(name = "Auto", group = "Teamcode")
+@Autonomous(name = "AutoB", group = "Teamcode")
 public class Autonomous_Blue_Team extends LinearOpMode{
     private ElapsedTime runtime = new ElapsedTime();
     static final char     RIGHT                   = 'R';
@@ -269,7 +269,7 @@ public class Autonomous_Blue_Team extends LinearOpMode{
         Thread.sleep(500);
         liftAndLaunch(.8, 3000);
         //Thread.sleep(200);
-        encoderDrivebyDistance(-.2, 23, 23);
+        encoderDrivebyDistance(-.2, 24, 24);
 
         //Turn to face beacon
         //turnLeftTime(.5, 1300);

@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 /**
  * Created by zhitao on 11/5/2016.
  */
-@Autonomous(name = "Auto", group = "Teamcode")
+@Autonomous(name = "AutoF", group = "Teamcode")
 public class Autonomous_Makeshift extends LinearOpMode{
     DcMotor drivemotorL;
     DcMotor drivemotorR;
