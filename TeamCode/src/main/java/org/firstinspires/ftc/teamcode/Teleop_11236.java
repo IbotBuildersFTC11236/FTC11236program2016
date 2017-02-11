@@ -58,7 +58,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class Teleop_11236 extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareTeleop_11236 robot           = new HardwareTeleop_11236();              // Use a K9'shardware
+    HardwareTeleop_11236 robot = new HardwareTeleop_11236();              // Use a K9'shardware
 
 
     @Override
@@ -89,41 +89,34 @@ public class Teleop_11236 extends LinearOpMode {
             //robot.intake.setPower(-1);
 
 
-
-
-
             // Use "a" button to spin fly wheels together
-            if(gamepad2.a) {
+            if (gamepad2.a) {
                 robot.rightFlyWheel.setPower(1);
                 robot.leftFlyWheel.setPower(1);
             }
-            if(gamepad2.x) {
-                robot.pulley.setPower(1);
-            }
             // Use "b" button to stop fly wheels
-            if(gamepad2.b) {
+            if (gamepad2.b) {
                 robot.rightFlyWheel.setPower(.8);
                 robot.leftFlyWheel.setPower(.8);
             }
-            if(gamepad2.y)
-            {
-                robot.pulley.setPower(0);
+            if (gamepad2.y) {
                 robot.rightFlyWheel.setPower(0);
                 robot.leftFlyWheel.setPower(0);
             }
-            if(gamepad1.x)
-            {
-                robot.intake.setPower(1);
-            }
-            if(gamepad1.a)
-            {
+            if (gamepad1.x) {
                 robot.intake.setPower(-1);
             }
-            if(gamepad1.b)
-            {
+            if (gamepad1.a) {
+                robot.intake.setPower(1);
+            }
+            if (gamepad1.b) {
                 robot.intake.setPower(0);
             }
-            // Use bumpers to spin fly wheels separately
+            if(gamepad1.right_bumper)
+            {
+                robot.intake.setPower(.5);
+            }
+                // Use bumpers to spin fly wheels separately
             /*if (gamepad1.left_bumper)
                 robot.leftFlyWheel.setPower(1);
             if (gamepad1.right_bumper)
@@ -131,9 +124,8 @@ public class Teleop_11236 extends LinearOpMode {
                */
 
 
-
-            // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
-            //robot.waitForTick(40);
+                // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
+                //robot.waitForTick(40);
+            }
         }
     }
-}

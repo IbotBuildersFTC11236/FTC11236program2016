@@ -34,7 +34,6 @@ public class Autonomous_Blue_Team extends LinearOpMode{
     DcMotor flywheelL = null;
     DcMotor flywheelR = null;
     DcMotor intake = null;
-    DcMotor lift = null;
     ColorSensor color;
 
 
@@ -66,11 +65,9 @@ public class Autonomous_Blue_Team extends LinearOpMode{
     public void liftAndLaunch(double power,long time) throws InterruptedException {
         shootIt(power);
         Thread.sleep(1000);
-        lift.setPower(1);
-        intake.setPower(-1);
+        intake.setPower(.5);
         Thread.sleep(time);
         intake.setPower(0);
-        lift.setPower(0);
         shootIt(0);
     }
     public void DriveForward(double power)
@@ -78,24 +75,116 @@ public class Autonomous_Blue_Team extends LinearOpMode{
         drivemotorL.setPower(power);
         drivemotorR.setPower(power);
     }
-    public void encoderDrivebyDistance(double speed,
-                             double leftInches, double rightInches) {
+    public void encoderDrivebyDistance2(double speed,double leftInches, double rightInches) {
         int newLeftTarget;
         int newRightTarget;
         double leftCount = leftInches * 72.0;
         double rightCount = rightInches * 72.0;
 
+            // Ensure that the opmode is still active
+            if (opModeIsActive()) {
+
+                // Determine new target position, and pass to motor controller
+                if (speed < 0) {
+                    newLeftTarget = drivemotorL.getCurrentPosition() - (int) (leftInches * COUNTS_PER_INCH);
+                    newRightTarget = drivemotorR.getCurrentPosition() - (int) (rightInches * COUNTS_PER_INCH);
+                } else {
+                    newLeftTarget = drivemotorL.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+                    newRightTarget = drivemotorR.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+                }
+                drivemotorL.setTargetPosition(newLeftTarget);
+                drivemotorR.setTargetPosition(newRightTarget);
+
+                // Turn On RUN_TO_POSITION
+                drivemotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                drivemotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                // reset the timeout time and start motion.
+                runtime.reset();
+                drivemotorL.setPower(speed);
+                drivemotorR.setPower(speed);
+                if (speed < 0) {
+                    while (opModeIsActive() &&
+                            (drivemotorL.getCurrentPosition() > newLeftTarget) &&
+                            (drivemotorL.isBusy() && drivemotorR.isBusy())) {
+
+                        // Display it for the driver.
+                        telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
+                        telemetry.addData("Path2", "Running at %7d :%7d",
+                                drivemotorL.getCurrentPosition(),
+                                drivemotorR.getCurrentPosition());
+                        telemetry.update();
+                    }
+                }
+
+                // keep looping while we are still active, and there is time left, and both motors are running.
+                else if (leftInches >= rightInches) {
+                    while (opModeIsActive() &&
+                            (drivemotorL.getCurrentPosition() < newLeftTarget) &&
+                            (drivemotorL.isBusy() && drivemotorR.isBusy())) {
+
+                        // Display it for the driver.
+                        telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
+                        telemetry.addData("Path2", "Running at %7d :%7d",
+                                drivemotorL.getCurrentPosition(),
+                                drivemotorR.getCurrentPosition());
+                        telemetry.update();
+                    }
+                } else if (rightInches > leftInches) {
+                    while (opModeIsActive() &&
+                            (drivemotorL.getCurrentPosition() < newRightTarget) &&
+                            (drivemotorL.isBusy() && drivemotorR.isBusy())) {
+
+                        // Display it for the driver.
+                        telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
+                        telemetry.addData("Path2", "Running at %7d :%7d",
+                                drivemotorL.getCurrentPosition(),
+                                drivemotorR.getCurrentPosition());
+                        telemetry.update();
+                    }
+                }
+
+                // Stop all motion;
+                drivemotorL.setPower(0);
+                drivemotorR.setPower(0);
+
+                // Turn off RUN_TO_POSITION
+                drivemotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                drivemotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                //  sleep(250);   // optional pause after each move
+            }
+    }
+
+    public void encoderDrivebyDistance(double speed,
+                                       double leftInches, double rightInches) {
+        int newLeftTarget;
+        int newRightTarget;
+
+        int mvLeftDir, mvRightDir;
+
+        if( speed * leftInches > 0){
+            mvLeftDir = 1;
+        }
+        else{
+            mvLeftDir = 0;
+        }
+
+        if( speed * rightInches > 0){
+            mvRightDir = 1;
+        }
+        else{
+            mvRightDir = 0;
+        }
+
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            if(speed < 0)
-            {
-                newLeftTarget = drivemotorL.getCurrentPosition() - (int)(leftInches * COUNTS_PER_INCH);
-                newRightTarget = drivemotorR.getCurrentPosition() - (int)(rightInches * COUNTS_PER_INCH);
-            }
-            else
-            {
+            if (speed < 0) {
+                newLeftTarget = drivemotorL.getCurrentPosition() - (int) (leftInches * COUNTS_PER_INCH);
+                newRightTarget = drivemotorR.getCurrentPosition() - (int) (rightInches * COUNTS_PER_INCH);
+            } else {
                 newLeftTarget = drivemotorL.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
                 newRightTarget = drivemotorR.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
             }
@@ -110,47 +199,39 @@ public class Autonomous_Blue_Team extends LinearOpMode{
             runtime.reset();
             drivemotorL.setPower(speed);
             drivemotorR.setPower(speed);
-            if(speed < 0)
-            {
-                while (opModeIsActive() &&
-                        (drivemotorL.getCurrentPosition() > newLeftTarget) &&
-                        (drivemotorL.isBusy() && drivemotorR.isBusy())) {
 
-                    // Display it for the driver.
-                    telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
-                    telemetry.addData("Path2", "Running at %7d :%7d",
-                            drivemotorL.getCurrentPosition(),
-                            drivemotorR.getCurrentPosition());
-                    telemetry.update();
+
+            while (opModeIsActive() &&
+            //        (drivemotorL.getCurrentPosition() > newLeftTarget) &&
+                    (drivemotorL.isBusy() && drivemotorR.isBusy())) {
+
+                // Display it for the driver.
+                telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
+                telemetry.addData("Path2", "Running at %7d :%7d",
+                        drivemotorL.getCurrentPosition(),
+                        drivemotorR.getCurrentPosition());
+                telemetry.update();
+                //left to the position
+                if( mvLeftDir == 1 ){
+                    if( drivemotorL.getCurrentPosition() >= newLeftTarget ){
+                        drivemotorL.setPower(0);
+                    }
                 }
-            }
-
-            // keep looping while we are still active, and there is time left, and both motors are running.
-             else if(leftInches >= rightInches) {
-                while (opModeIsActive() &&
-                        (drivemotorL.getCurrentPosition() < newLeftTarget) &&
-                        (drivemotorL.isBusy() && drivemotorR.isBusy())) {
-
-                    // Display it for the driver.
-                    telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
-                    telemetry.addData("Path2", "Running at %7d :%7d",
-                            drivemotorL.getCurrentPosition(),
-                            drivemotorR.getCurrentPosition());
-                    telemetry.update();
+                else{
+                    if( drivemotorL.getCurrentPosition() <= newLeftTarget ) {
+                        drivemotorL.setPower(0);
+                    }
                 }
-            }
-            else if(rightInches > leftInches)
-            {
-                while (opModeIsActive() &&
-                        (drivemotorL.getCurrentPosition() < newRightTarget) &&
-                        (drivemotorL.isBusy() && drivemotorR.isBusy())) {
-
-                    // Display it for the driver.
-                    telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
-                    telemetry.addData("Path2", "Running at %7d :%7d",
-                            drivemotorL.getCurrentPosition(),
-                            drivemotorR.getCurrentPosition());
-                    telemetry.update();
+                //right to the position
+                if( mvRightDir == 1 ){
+                    if( drivemotorR.getCurrentPosition() >= newRightTarget ){
+                        drivemotorR.setPower(0);
+                    }
+                }
+                else {
+                    if (drivemotorR.getCurrentPosition() <= newRightTarget) {
+                        drivemotorR.setPower(0);
+                    }
                 }
             }
 
@@ -237,7 +318,6 @@ public class Autonomous_Blue_Team extends LinearOpMode{
         drivemotorR = hardwareMap.dcMotor.get("right_drive");
         flywheelL = hardwareMap.dcMotor.get("left_fly");
         flywheelR = hardwareMap.dcMotor.get("right_fly");
-        lift = hardwareMap.dcMotor.get("pulley");
         intake = hardwareMap.dcMotor.get("intake");
         color = hardwareMap.colorSensor.get("color");
         drivemotorL.setDirection(DcMotor.Direction.REVERSE);
@@ -265,11 +345,11 @@ public class Autonomous_Blue_Team extends LinearOpMode{
         //Thread.sleep(200);
         //Go forward on slant
         //driveForwardTime(.5, 2075);
-        encoderDrivebyDistance(-.4, 10, 10);
+        encoderDrivebyDistance(-.4, 20, 20);
         Thread.sleep(500);
         liftAndLaunch(.8, 3000);
         //Thread.sleep(200);
-        encoderDrivebyDistance(-.2, 24, 24);
+        encoderDrivebyDistance(-.2, 12, 12);
 
         //Turn to face beacon
         //turnLeftTime(.5, 1300);
@@ -346,7 +426,7 @@ public class Autonomous_Blue_Team extends LinearOpMode{
             //Thread.sleep(200);
             encoderDrivebyDistance(.5, 25, 25);
             //Thread.sleep(200);
-            encoderTurnByDistance(.3, 65, LEFT);
+            encoderTurnByDistance(.3, 80, LEFT);
             Thread.sleep(500);
             encoderDrivebyDistance(.5, 25, 25);
             //encoderDrivebyDistance(.2, 24, 24);

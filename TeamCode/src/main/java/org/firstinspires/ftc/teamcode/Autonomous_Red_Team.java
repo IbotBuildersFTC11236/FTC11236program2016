@@ -34,7 +34,6 @@ public class Autonomous_Red_Team extends LinearOpMode{
     DcMotor flywheelL = null;
     DcMotor flywheelR = null;
     DcMotor intake = null;
-    DcMotor lift = null;
     ColorSensor color;
 
 
@@ -66,11 +65,9 @@ public class Autonomous_Red_Team extends LinearOpMode{
     public void liftAndLaunch(double power,long time) throws InterruptedException {
         shootIt(power);
         Thread.sleep(1000);
-        lift.setPower(1);
-        intake.setPower(-1);
+        intake.setPower(.5);
         Thread.sleep(time);
         intake.setPower(0);
-        lift.setPower(0);
         shootIt(0);
     }
     public void DriveForward(double power)
@@ -237,7 +234,6 @@ public class Autonomous_Red_Team extends LinearOpMode{
         drivemotorR = hardwareMap.dcMotor.get("right_drive");
         flywheelL = hardwareMap.dcMotor.get("left_fly");
         flywheelR = hardwareMap.dcMotor.get("right_fly");
-        lift = hardwareMap.dcMotor.get("pulley");
         intake = hardwareMap.dcMotor.get("intake");
         color = hardwareMap.colorSensor.get("color");
         drivemotorL.setDirection(DcMotor.Direction.REVERSE);

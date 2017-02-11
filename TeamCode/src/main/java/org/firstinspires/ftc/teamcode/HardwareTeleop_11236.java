@@ -53,7 +53,6 @@ public class HardwareTeleop_11236
         leftMotor   = hwMap.dcMotor.get("left_drive");
         rightMotor  = hwMap.dcMotor.get("right_drive");
         intake = hwMap.dcMotor.get("intake");
-        pulley = hwMap.dcMotor.get("pulley");
         leftFlyWheel   = hwMap.dcMotor.get("left_fly");
         rightFlyWheel  = hwMap.dcMotor.get("right_fly");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -75,7 +74,6 @@ public class HardwareTeleop_11236
         leftFlyWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFlyWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        pulley.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
     }
