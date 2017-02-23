@@ -65,7 +65,7 @@ public class Autonomous_Blue_Team extends LinearOpMode{
     public void liftAndLaunch(double power,long time) throws InterruptedException {
         shootIt(power);
         Thread.sleep(1000);
-        intake.setPower(.5);
+        intake.setPower(1);
         Thread.sleep(time);
         intake.setPower(0);
         shootIt(0);
@@ -349,11 +349,11 @@ public class Autonomous_Blue_Team extends LinearOpMode{
         Thread.sleep(500);
         liftAndLaunch(.8, 3000);
         //Thread.sleep(200);
-        encoderDrivebyDistance(-.2, 12, 12);
+        encoderDrivebyDistance(-.2, 8, 8);
 
         //Turn to face beacon
         //turnLeftTime(.5, 1300);
-        encoderDrivebyDistance(.3, 4, 4);
+        encoderDrivebyDistance(.3, 3, 3);
         //Thread.sleep(200);
         // Go to beacon
         //encoderDrivebyDistance(-.5, 18, 18);
@@ -391,10 +391,10 @@ public class Autonomous_Blue_Team extends LinearOpMode{
             //Thread.sleep(200);
             encoderDrivebyDistance(.6, 27, 27);
             //Thread.sleep(200);
-            encoderTurnByDistance(.3, 65, LEFT);
+            encoderTurnByDistance(.3, 90, LEFT);
             Thread.sleep(500);
-            encoderDrivebyDistance(.5, 25, 25);
-            //encoderDrivebyDistance(-.5, 5, 5);
+            encoderDrivebyDistance(1, 30, 30);
+            //encoderDrivebyDistance(-).5, 5, 5);
             //Thread.sleep(200);
             //encoderDrivebyDistance(.2, 24,24);
             //Thread.sleep(200);
@@ -426,9 +426,9 @@ public class Autonomous_Blue_Team extends LinearOpMode{
             //Thread.sleep(200);
             encoderDrivebyDistance(.5, 25, 25);
             //Thread.sleep(200);
-            encoderTurnByDistance(.3, 80, LEFT);
+            encoderTurnByDistance(.3, 90, LEFT);
             Thread.sleep(500);
-            encoderDrivebyDistance(.5, 25, 25);
+            encoderDrivebyDistance(1, 30, 30);
             //encoderDrivebyDistance(.2, 24, 24);
             //encoderTurnByDistance(.2, 47, RIGHT);
             //Thread.sleep(200);
