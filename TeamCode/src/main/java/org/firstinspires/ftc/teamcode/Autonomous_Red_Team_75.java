@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.app.Activity;
 import android.graphics.Color;
-import android.view.View;
 
-import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -29,12 +27,12 @@ public class Autonomous_Red_Team_75 extends LinearOpMode{
                                                         (WHEEL_DIAMETER_INCHES * PI);
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
-    DcMotor drivemotorL = null;
-    DcMotor drivemotorR = null;
-    DcMotor flywheelL = null;
-    DcMotor flywheelR = null;
-    DcMotor intake = null;
-    ColorSensor color;
+    static DcMotor drivemotorL = null;
+    static DcMotor drivemotorR = null;
+    static DcMotor flywheelL = null;
+    static DcMotor flywheelR = null;
+    static DcMotor intake = null;
+    static ColorSensor color;
 
 
     public void driveForwardTime(double power, long time) throws InterruptedException{
@@ -159,6 +157,7 @@ public class Autonomous_Red_Team_75 extends LinearOpMode{
     public void encoderDrivebyDistance(double speed,
                                        double leftInches, double rightInches) {
         int newLeftTarget;
+        String message = "";
         int newRightTarget;
 
         int mvLeftDir, mvRightDir;
@@ -204,34 +203,37 @@ public class Autonomous_Red_Team_75 extends LinearOpMode{
             while (opModeIsActive() &&
             //        (drivemotorL.getCurrentPosition() > newLeftTarget) &&
                     (drivemotorL.isBusy() && drivemotorR.isBusy())) {
-
-                // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
-                telemetry.addData("Path2", "Running at %7d :%7d",
-                        drivemotorL.getCurrentPosition(),
-                        drivemotorR.getCurrentPosition());
-                telemetry.update();
-                //left to the position
-                if( mvLeftDir == 1 ){
-                    if( drivemotorL.getCurrentPosition() >= newLeftTarget ){
-                        drivemotorL.setPower(0);
+                try {
+                    // Display it for the driver.
+                    //telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
+                    //telemetry.addData("Path2", "Running at %7d :%7d",
+                    //drivemotorL.getCurrentPosition(),
+                    //drivemotorR.getCurrentPosition());
+                    //telemetry.update();
+                    //left to the position
+                    if (mvLeftDir == 1) {
+                        if (drivemotorL.getCurrentPosition() >= newLeftTarget) {
+                            drivemotorL.setPower(0);
+                        }
+                    } else {
+                        if (drivemotorL.getCurrentPosition() <= newLeftTarget) {
+                            drivemotorL.setPower(0);
+                        }
+                    }
+                    //right to the position
+                    if (mvRightDir == 1) {
+                        if (drivemotorR.getCurrentPosition() >= newRightTarget) {
+                            drivemotorR.setPower(0);
+                        }
+                    } else {
+                        if (drivemotorR.getCurrentPosition() <= newRightTarget) {
+                            drivemotorR.setPower(0);
+                        }
                     }
                 }
-                else{
-                    if( drivemotorL.getCurrentPosition() <= newLeftTarget ) {
-                        drivemotorL.setPower(0);
-                    }
-                }
-                //right to the position
-                if( mvRightDir == 1 ){
-                    if( drivemotorR.getCurrentPosition() >= newRightTarget ){
-                        drivemotorR.setPower(0);
-                    }
-                }
-                else {
-                    if (drivemotorR.getCurrentPosition() <= newRightTarget) {
-                        drivemotorR.setPower(0);
-                    }
+                catch (Exception e){
+                    message = "a";
+                    System.out.println(message);
                 }
             }
 
@@ -309,10 +311,6 @@ public class Autonomous_Red_Team_75 extends LinearOpMode{
 
         // bLedOn represents the state of the LED.
         float hsvValues[] = {0F, 0F, 0F};
-        final float values[] = hsvValues;
-        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(R.id.RelativeLayout);
-        boolean bPrevState = false;
-        boolean bCurrState = false;
         boolean bLedOn = true;
         drivemotorL = hardwareMap.dcMotor.get("left_drive");
         drivemotorR = hardwareMap.dcMotor.get("right_drive");
@@ -321,169 +319,72 @@ public class Autonomous_Red_Team_75 extends LinearOpMode{
         intake = hardwareMap.dcMotor.get("intake");
         color = hardwareMap.colorSensor.get("color");
         drivemotorL.setDirection(DcMotor.Direction.REVERSE);
+        drivemotorR.setDirection(DcMotor.Direction.FORWARD);
         flywheelL.setDirection(DcMotor.Direction.REVERSE);
+        flywheelR.setDirection(DcMotor.Direction.FORWARD);
         drivemotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         drivemotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         color.enableLed(bLedOn);
         //Start dat robot
 
         // Set the LED in the beginning
-
+        String message = "";
         waitForStart();
+        try {
 
-        //int ANDYMARK_TICKS_PER_REV = 1120;
-        //liftAndLaunch(1, 3000);
-       // Thread.sleep(400);
-        // Go forward
-        //driveForwardTime(.5, 850);
-        encoderDrivebyDistance(.5, 48, 48);
-        //Thread.sleep(200);
-        //Make turn to beacon
-        //turnRightTime(.5, 600);
-        //turnRightTime(.5, 600);
-        encoderTurnByDistance(-.1, 90, LEFT);
-        //Thread.sleep(200);
-        //Go forward on slant
-        //driveForwardTime(.5, 2075);
-        encoderDrivebyDistance(-.4, 20, 20);
-        Thread.sleep(500);
-        liftAndLaunch(.8, 3000);
-        //Thread.sleep(200);
-        encoderDrivebyDistance(-.2, 8, 8);
 
-        //Turn to face beacon
-        //turnLeftTime(.5, 1300);
-        encoderDrivebyDistance(.3, 3, 3);
-        //Thread.sleep(200);
-        // Go to beacon
-        //encoderDrivebyDistance(-.5, 18, 18);
-        //Thread.sleep(200);
-        //encoderDrivebyDistance(.2, 4, 4);
+            encoderDrivebyDistance(.5, 48, 48);
 
-        Color.RGBToHSV(color.red() * 8, color.green() * 8, color.blue() * 8, hsvValues);
+            encoderTurnByDistance(-.1, 95, LEFT);
 
-        // send the info back to driver station using telemetry function.
-        telemetry.addData("Red  ", color.red());
-        telemetry.addData("Green", color.green());
-        telemetry.addData("Blue ", color.blue());
-        relativeLayout.post(new Runnable() {
-            public void run() {
-                relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+            encoderDrivebyDistance(-.4, 20, 20);
+            //Thread.sleep(500);
+            liftAndLaunch(.8, 3000);
+
+            encoderDrivebyDistance(-.2, 9, 9);
+
+
+            encoderDrivebyDistance(.3, 3, 3);
+
+
+            Color.RGBToHSV(color.red() * 8, color.green() * 8, color.blue() * 8, hsvValues);
+
+
+            if (color.blue() >= 1) {
+                Thread.sleep(4000);
+                encoderDrivebyDistance(-.3, 5, 5);
+                encoderDrivebyDistance(.2, 12, 12);
+
+            } else if (color.red() >= 1) {
+                //Thread.sleep(100);
+                encoderDrivebyDistance(.2, 12, 12);
             }
-        });
-        telemetry.update();
+            encoderTurnByDistance(-.2, 90, LEFT);
 
+            encoderDrivebyDistance(-1, 40, 40);
 
-        if(color.blue() >= 1)
-        {
-            telemetry.addData("RED", color.red());
-            telemetry.update();
-            Thread.sleep(4000);
-            encoderDrivebyDistance(-.3, 5, 5);
-            //Thread.sleep(200);
-            encoderDrivebyDistance(.2, 12,12);
-            //Thread.sleep(200);
-            //encoderTurnByDistance(.2, 90, LEFT);
-            //Thread.sleep(400);
-            //encoderDrivebyDistance(.2, 33, 33);
-            //Thread.sleep(400);
-
+            encoderTurnByDistance(.3, 90, LEFT);
             //Thread.sleep(500);
-            //encoderDrivebyDistance(1, 30, 30);
-            //encoderDrivebyDistance(-).5, 5, 5);
-            //Thread.sleep(200);
-            //encoderDrivebyDistance(.2, 24,24);
-            //Thread.sleep(200);
-            //encoderTurnByDistance(.2, 90, LEFT);
-            //Thread.sleep(400);
-            //encoderDrivebyDistance(.2, 33, 33);
-            //Thread.sleep(400);
-           // encoderTurnByDistance(.2, 45, RIGHT);
-            //Thread.sleep(200);
-            //encoderDrivebyDistance(.5, 25, 25);
-            //Thread.sleep(200);
-            //encoderTurnByDistance(.3, 65, LEFT);
-            //Thread.sleep( 500);
-            //encoderDrivebyDistance(.5, 33, 33);
-            // Go do ball
-        }
-        else if(color.red() >= 1)
-        {
-            telemetry.addData("BLUE", color.blue());
-            telemetry.update();
-            Thread.sleep(100);
-            encoderDrivebyDistance(.2, 12,12);
-            //Thread.sleep(200);
-            //encoderTurnByDistance(.2, 90, LEFT);
-            //Thread.sleep(400);
-            //encoderDrivebyDistance(.2, 33, 33);
-            //Thread.sleep(400);
-            //encoderDrivebyDistance(.2, 24, 24);
-            //encoderTurnByDistance(.2, 47, RIGHT);
-            //Thread.sleep(200);
-            //encoderDrivebyDistance(.5, 22, 22);
-            //Thread.sleep(200);
-           // encoderTurnByDistance(.3, 65, LEFT);
-            //Thread.sleep(500);
-           // encoderDrivebyDistance(.5, 36, 36);
-            //Go do ball
-        }
-        encoderTurnByDistance(-.2, 95, LEFT);
-        //Thread.sleep(200);
-        encoderDrivebyDistance(-.6, 42, 42);
-        //Thread.sleep(200);
-        encoderTurnByDistance(.3, 90, LEFT);
-        Thread.sleep(500);
-        encoderDrivebyDistance(-.3,11,11);
-        encoderDrivebyDistance(.6,7,7);
-        Color.RGBToHSV(color.red() * 8, color.green() * 8, color.blue() * 8, hsvValues);
+            encoderDrivebyDistance(-.3, 11, 11);
+            encoderDrivebyDistance(.6, 7, 7);
+            Color.RGBToHSV(color.red() * 8, color.green() * 8, color.blue() * 8, hsvValues);
 
-        // send the info back to driver station using telemetry function.
-        telemetry.addData("Red  ", color.red());
-        telemetry.addData("Green", color.green());
-        telemetry.addData("Blue ", color.blue());
-        relativeLayout.post(new Runnable() {
-            public void run() {
-                relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+            // send the info back to driver station using telemetry function.
+
+            if (color.blue() >= 1) {
+                Thread.sleep(4000);
+                encoderDrivebyDistance(-.3, 7, 7);
+                encoderDrivebyDistance(.2, 2, 2);
+
             }
-        });
-        telemetry.update();
-
-        if(color.blue() >= 1)
-        {
-            telemetry.addData("RED", color.red());
-            telemetry.update();
-            Thread.sleep(4000);
-            encoderDrivebyDistance(-.3, 7, 7);
-            //Thread.sleep(200);
-            encoderDrivebyDistance(.2, 2,2);
-            //Thread.sleep(200);
-            //encoderTurnByDistance(.2, 90, LEFT);
-            //Thread.sleep(400);
-            //encoderDrivebyDistance(.2, 33, 33);
-            //Thread.sleep(400);
-
-            //Thread.sleep(500);
-            //encoderDrivebyDistance(1, 30, 30);
-            //encoderDrivebyDistance(-).5, 5, 5);
-            //Thread.sleep(200);
-            //encoderDrivebyDistance(.2, 24,24);
-            //Thread.sleep(200);
-            //encoderTurnByDistance(.2, 90, LEFT);
-            //Thread.sleep(400);
-            //encoderDrivebyDistance(.2, 33, 33);
-            //Thread.sleep(400);
-            // encoderTurnByDistance(.2, 45, RIGHT);
-            //Thread.sleep(200);
-            //encoderDrivebyDistance(.5, 25, 25);
-            //Thread.sleep(200);
-            //encoderTurnByDistance(.3, 65, LEFT);
-            //Thread.sleep( 500);
-            //encoderDrivebyDistance(.5, 33, 33);
-            // Go do ball
+            encoderTurnByDistance(-.8, 50, LEFT);
+            encoderDrivebyDistance(1, 80, 80);
         }
-
-
+        catch (NullPointerException e){
+            message = e.getMessage();
+            telemetry.addLine("aasdjadsh");
+            telemetry.update();
+        }
 
     }
 }
