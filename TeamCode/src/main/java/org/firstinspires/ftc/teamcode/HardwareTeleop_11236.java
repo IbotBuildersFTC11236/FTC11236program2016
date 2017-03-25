@@ -34,6 +34,10 @@ public class HardwareTeleop_11236
     public DcMotor  leftFlyWheel  = null;
     public DcMotor  intake = null;
     public DcMotor  pulley = null;
+    public Servo    arm = null;
+    public final static double ARM_HOME = 0.2;
+    public final static double ARM_MIN_RANGE  = 0.20;
+    public final static double ARM_MAX_RANGE  = 0.90;
 
 
     /* Local OpMode members. */
@@ -57,6 +61,7 @@ public class HardwareTeleop_11236
         rightFlyWheel  = hwMap.dcMotor.get("right_fly");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         leftFlyWheel.setDirection(DcMotor.Direction.REVERSE);
+        arm = hwMap.servo.get("arm");
 
 
         // Set all motors to zero power
@@ -66,6 +71,7 @@ public class HardwareTeleop_11236
         rightFlyWheel.setPower(0);
         intake.setPower(0);
         intake.setPower(0);
+        arm.setPosition(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.

@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -35,6 +36,8 @@ public class Autonomous_Blue_Team extends LinearOpMode{
     DcMotor flywheelR = null;
     DcMotor intake = null;
     ColorSensor color;
+    public Servo arm = null;
+
 
 
     public void driveForwardTime(double power, long time) throws InterruptedException{
@@ -66,9 +69,11 @@ public class Autonomous_Blue_Team extends LinearOpMode{
         shootIt(power);
         Thread.sleep(1000);
         intake.setPower(1);
+        arm.setPosition(.8);
         Thread.sleep(time);
         intake.setPower(0);
         shootIt(0);
+        arm.setPosition(0);
     }
     public void DriveForward(double power)
     {
@@ -320,6 +325,7 @@ public class Autonomous_Blue_Team extends LinearOpMode{
         flywheelR = hardwareMap.dcMotor.get("right_fly");
         intake = hardwareMap.dcMotor.get("intake");
         color = hardwareMap.colorSensor.get("color");
+        arm = hardwareMap.servo.get("arm");
         drivemotorL.setDirection(DcMotor.Direction.REVERSE);
         flywheelL.setDirection(DcMotor.Direction.REVERSE);
         drivemotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -328,14 +334,17 @@ public class Autonomous_Blue_Team extends LinearOpMode{
         //Start dat robot
 
         // Set the LED in the beginning
+        arm.setPosition(0);
 
         waitForStart();
+
 
         //int ANDYMARK_TICKS_PER_REV = 1120;
         //liftAndLaunch(1, 3000);
        // Thread.sleep(400);
         // Go forward
         //driveForwardTime(.5, 850);
+
         encoderDrivebyDistance(.2, 48, 48);
         //Thread.sleep(200);
         //Make turn to beacon
@@ -444,4 +453,5 @@ public class Autonomous_Blue_Team extends LinearOpMode{
 
 
     }
+
 }

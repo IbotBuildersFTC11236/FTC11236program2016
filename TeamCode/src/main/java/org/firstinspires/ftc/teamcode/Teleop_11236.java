@@ -34,6 +34,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * This OpMode uses the common HardwareK9bot class to define the devices on the robot.
@@ -58,7 +59,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class Teleop_11236 extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareTeleop_11236 robot = new HardwareTeleop_11236();              // Use a K9'shardware
+    HardwareTeleop_11236 robot = new HardwareTeleop_11236();
+    double          armPosition     = robot.ARM_HOME;     // Use a K9'shardware
+    final double    ARM_SPEED      = 0.01 ;                            // sets rate to move servo
 
 
     @Override
@@ -104,9 +107,9 @@ public class Teleop_11236 extends LinearOpMode {
                 robot.rightFlyWheel.setPower(0);
                 robot.leftFlyWheel.setPower(0);
             }
-            if (gamepad1.x) {
-                robot.intake.setPower(-1);
-            }
+            //if (gamepad1.x) {
+               // robot.intake.setPower(-1);
+            //}
             if (gamepad1.a) {
                 robot.intake.setPower(1);
             }
@@ -117,6 +120,12 @@ public class Teleop_11236 extends LinearOpMode {
             {
                 robot.intake.setPower(.5);
             }
+            if (gamepad1.x)
+                robot.arm.setPosition(0);
+            if (gamepad1.y)
+                robot.arm.setPosition(.8);
+            //armPosition  = Range.clip(armPosition, robot.ARM_MIN_RANGE, robot.ARM_MAX_RANGE);
+            //robot.arm.setPosition(armPosition);
                 // Use bumpers to spin fly wheels separately
             /*if (gamepad1.left_bumper)
                 robot.leftFlyWheel.setPower(1);

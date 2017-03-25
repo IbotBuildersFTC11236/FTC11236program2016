@@ -13,6 +13,10 @@ public class HardwareAutonomous_11236 {
     /* Public OpMode members. */
     public DcMotor leftMotor   = null;
     public DcMotor  rightMotor  = null;
+    public Servo    arm = null;
+    public final static double ARM_HOME = 0.2;
+    public final static double ARM_MIN_RANGE  = 0.20;
+    public final static double ARM_MAX_RANGE  = 0.90;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -33,10 +37,13 @@ public class HardwareAutonomous_11236 {
         rightMotor  = hwMap.dcMotor.get("right_drive");
         leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        arm = hwMap.servo.get("arm");
 
         // Set all motors to zero power
         leftMotor.setPower(0);
         rightMotor.setPower(0);
+        arm.setPosition(0);
+
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
